@@ -34,10 +34,7 @@ public class ProductsServiceImpl implements ProductService {
         return "Product added successfully";
     }
 
-    public String updateProduct(ProductDTO productDTO,String token) {
-        if(token.contains("ROLE_USER")) {
-            throw new RuntimeException("You are not authorized to update a product");
-        }
+    public String updateProduct(ProductDTO productDTO) {
         Optional<Products> product = productsRepository.findByProductName(productDTO.getProductName());
         if (product.isPresent()) {
             product.get().setPrice(productDTO.getPrice());
@@ -60,9 +57,9 @@ public class ProductsServiceImpl implements ProductService {
         return "Product not found";
     }
 
-    public ProductDTO getProduct(String productName, String username) {
-        String role = username;
-        if (role.equals("ROLE_USER")){
+    public ProductDTO getProduct(String productName) {
+//        String role = username;
+//        if (role.equals("ROLE_USER")){
         Optional<Products> product = productsRepository.findByProductName(productName);
         if (product.isPresent()) {
             return ProductDTO.builder()
@@ -70,14 +67,15 @@ public class ProductsServiceImpl implements ProductService {
                     .price(product.get().getPrice())
                     .quantity(product.get().getQuantity())
                     .build();
+//        }
+//    }else {
+//            throw new RuntimeException("You are not authorized to view this product");
+//        }
+//return null;
         }
-    }else {
-            throw new RuntimeException("You are not authorized to view this product");
-        }
-return null;
+        return null;
+
     }
-
-
 
 
     public List<ProductDTO> getAllProductsBySort(String sortType, String username) {
@@ -92,6 +90,16 @@ return null;
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
                 .build()).collect(Collectors.toList());
+    }
+
+    public String updateQuantity(String productName, ProductDTO productDTO) {
+        Optional<Products> product = productsRepository.findByProductName(productName);
+        if (product.isPresent()) {
+            product.get().setQuantity(productDTO.getQuantity());
+            productsRepository.save(product.get());
+            return "Quantity updated successfully";
+        }
+        return "Product not found";
     }
 }
 

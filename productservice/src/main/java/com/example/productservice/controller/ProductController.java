@@ -30,8 +30,8 @@ public class ProductController {
 
 
     @PutMapping("/updateProduct")
-    public String updateProduct(@RequestBody ProductDTO productDTO,@RequestHeader("role") String token){
-        return productService.updateProduct(productDTO,token);
+    public String updateProduct(@RequestBody ProductDTO productDTO){
+        return productService.updateProduct(productDTO);
     }
 
 
@@ -41,14 +41,19 @@ public class ProductController {
     }
 
     @GetMapping("/getProduct")
-    public ProductDTO getProduct(@RequestParam("productName") String productName,@RequestHeader("role") String username){
-//        String name=restTemplate.getForObject("http://localhost:8081/user/extractUsername?token="+token,String.class); //This is the line that needs to be changed to get the username from the token
-        return productService.getProduct(productName,username);
+    public ProductDTO getProduct(@RequestParam("productName") String productName){
+
+        return productService.getProduct(productName);
     }
 
     @GetMapping("/getAllProductsBySort")
     public List<ProductDTO> getAllProductsBySort(@RequestParam("sortType") String sortType,@RequestHeader("role") String username){
         return productService.getAllProductsBySort(sortType,username);
+    }
+
+    @PutMapping("/updateQuantity/{productName}")
+    public String updateQuantity(@PathVariable("productName") String productName,@RequestBody ProductDTO productDTO){
+        return productService.updateQuantity(productName,productDTO);
     }
 
 
