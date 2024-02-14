@@ -19,8 +19,8 @@ import java.util.UUID;
 public class OrderFile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int orderId;
 
     private String productName;
 

@@ -21,10 +21,8 @@ public class ProductsServiceImpl implements ProductService {
         this.productsRepository = productsRepository;
     }
 
-    public String addProduct(ProductDTO productDTO,String token) {
-        if(token.contains("ROLE_USER")) {
-            throw new RuntimeException("You are not authorized to add a product");
-        }
+    public String addProduct(ProductDTO productDTO) {
+
         Products product = Products.builder()
                 .productName(productDTO.getProductName())
                 .price(productDTO.getPrice())

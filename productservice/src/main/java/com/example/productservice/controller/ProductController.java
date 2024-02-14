@@ -24,8 +24,8 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public String addProduct(@RequestBody ProductDTO productDTO,@RequestHeader("role") String token){
-        return productService.addProduct(productDTO,token);
+    public String addProduct(@RequestBody ProductDTO productDTO){
+        return productService.addProduct(productDTO);
     }
 
 

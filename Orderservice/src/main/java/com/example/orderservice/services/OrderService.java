@@ -1,12 +1,16 @@
 package com.example.orderservice.services;
 
+import com.example.orderservice.entity.OrderFile;
+
+import java.util.List;
+import java.util.UUID;
+
 public interface OrderService {
-    public String addOrder(String productName, int quantity);
-    public String updateOrder(String productName, int quantity, String token);
-    public String deleteOrder(String productName, String token);
-    public String confirmOrder(String productName, String token);
-    public String cancelOrder(String productName, String token);
-    public String getOrder(String productName, String token);
-    public String getAllOrders(String token);
-    public String getAllOrdersBySort(String sortType, String token);
+    public int addOrder(String productName, int quantity);
+
+    public String confirmOrder(int orderId);
+    public String cancelOrder(String productName);
+    public OrderFile getOrder(int orderId);
+    public List<OrderFile> getAllOrders();
+
 }

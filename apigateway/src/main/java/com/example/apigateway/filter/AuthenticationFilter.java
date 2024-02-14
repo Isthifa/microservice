@@ -40,14 +40,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     authHeader = authHeader.substring(7);
                 }
                 try {
-//                    //REST call to AUTH service
-//                    template.getForObject("http://IDENTITY-SERVICE//validate?token" + authHeader, String.class);
-//                    jwtUtil.validateToken(authHeader);
-//                    String username=jwtUtil.extractUsername(authHeader);
-//                    List<String> roles=jwtUtil.extractAuthorities(authHeader);
-//                    System.out.println("Token is valid=" + authHeader);
-//                    System.out.println("Username is=" + username+" Roles are="+roles);
-                    request=exchange.getRequest()
+                request=exchange.getRequest()
                             .mutate()
                             .header("role",jwtUtil.extractAuthorities(authHeader).get(0)).build();
 

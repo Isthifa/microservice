@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -22,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public String addOrder(String productName, int quantity) {
+    public int addOrder(String productName, int quantity) {
 //        RestClient restClient1 = RestClient.create();
         ProductDTO productDTO=restClient.get().uri("/getProduct?productName="+productName)
                 .retrieve()
@@ -45,45 +49,45 @@ public class OrderServiceImpl implements OrderService {
                     .build();
             orderRepository.save(orderFile);
 
-            return "Order placed successfully";
+            return orderFile.getOrderId();
         }else {
-            return "Product not available";
+            return 0;
         }
 
     }
 
+
+
+
     @Override
-    public String updateOrder(String productName, int quantity, String token) {
-       return null;
+    public String confirmOrder(int orderId) {
+       Optional<OrderFile> orderFile= orderRepository.findByOrderId(orderId);
+         if (orderFile.isPresent()){
+             OrderFile orderFile1=orderFile.get();
+                orderFile1.setIsOrderConfirmed("true");
+                orderRepository.save(orderFile1);
+            }
+         return "Order confirmed successfully";
     }
 
     @Override
-    public String deleteOrder(String productName, String token) {
-        return
-    }
-
-    @Override
-    public String confirmOrder(String productName, String token) {
+    public String cancelOrder(String productName) {
+        //TODO: Implement this method
+        //when you cancel the order, the quantity of the product should be updated
+        //to cancel the order, you need update confirmOrder to false and update the quantity of the product
         return null;
     }
 
+
     @Override
-    public String cancelOrder(String productName, String token) {
-        return null;
+    public OrderFile getOrder(int orderId) {
+        return orderRepository.findByOrderId(orderId).get();
     }
 
     @Override
-    public String getOrder(String productName, String token) {
-        return null;
+    public List<OrderFile> getAllOrders() {
+        return orderRepository.findAll();
     }
 
-    @Override
-    public String getAllOrders(String token) {
-        return null;
-    }
 
-    @Override
-    public String getAllOrdersBySort(String sortType, String token) {
-        return null;
-    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    String addProduct(ProductDTO productDTO,String username);
+    String addProduct(ProductDTO productDTO);
     String updateProduct(ProductDTO productDTO);
     String deleteProduct(String productName,String username);
     ProductDTO getProduct(String productName);
