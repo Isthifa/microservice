@@ -5,6 +5,7 @@ import com.example.orderservice.entity.OrderFile;
 import com.example.orderservice.repository.OrderRepository;
 import com.example.orderservice.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -18,6 +19,9 @@ import java.util.UUID;
 @Service
 public class OrderServiceImpl implements OrderService {
     RestClient restClient = RestClient.create("http://localhost:8082/product/");
+
+    public WebClientBuilder webClientBuilder;
+
 
     @Autowired
     private OrderRepository orderRepository;

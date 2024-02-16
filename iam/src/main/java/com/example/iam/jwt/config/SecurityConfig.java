@@ -53,7 +53,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/user/register","/user/addRole", "/user/token","/auth/validate","/user/extractUsername")
+                        authorizeRequests.requestMatchers("/user/register","/user/addRole", "/user/token","/auth/validate","/user/extractUsername","/swagger-ui/**","/v3/**")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(basic -> {basic.disable();})
